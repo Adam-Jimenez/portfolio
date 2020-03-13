@@ -39,10 +39,14 @@ h2 {
     border-bottom: solid 2px rgba(255,255,255,0.8);
 }
 ul {
+    margin:0;
+    padding:0;
     padding-top: 16px;
     margin: none;
 }
 li {
+    margin:0;
+    padding:0;
     font-size: 28px;
     margin-bottom: 32px;
     list-style-type: none;
