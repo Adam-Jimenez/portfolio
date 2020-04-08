@@ -31,6 +31,10 @@ nav {
 
     padding:0 32px;
     padding-top: 64px;
+    transition: background-color 0.2s ease-out;
+}
+nav:hover {
+    background-color: rgba(0,0,0,0.8);
 }
 h2 {
     padding: 16px 0;
