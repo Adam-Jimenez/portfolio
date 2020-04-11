@@ -1,15 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import DemoScene from "@/scenes/scene";
+import DemoScene from "@/scenes/demo";
 Vue.use(Vuex);
 
+const scenes = {
+  demo: new DemoScene()
+};
+
 const initialState = {
-  activeScene: new DemoScene()
+  activeScene: scenes.demo,
+  sceneLoading: true
 };
 
 const store = new Vuex.Store({
   state: initialState,
-  mutations: {}
+  mutations: {
+    setSceneLoading(state, isLoading) {
+      state.sceneLoading = isLoading;
+    }
+  }
 });
 
 export default store;

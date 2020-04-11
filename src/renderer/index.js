@@ -1,14 +1,16 @@
 import * as THREE from "three";
 
-const SKY_BLUE = "#87CEED";
+const COLORS = {
+  SKY_BLUE: "#87CEED"
+};
 
 export default class Renderer extends THREE.WebGLRenderer {
   constructor(canvasDomNode) {
-    super({ canvas: canvasDomNode });
-    this.setClearColor(SKY_BLUE);
+    super({ canvas: canvasDomNode, antialias: true });
+    this.setClearColor(COLORS.SKY_BLUE);
     this.setSize(window.innerWidth, window.innerHeight);
-    this.shadowMapEnabled = true;
-    this.shadowMap.type = THREE.BasicShadowMap;
+    this.shadowMap.enabled = true;
+    this.shadowMap.type = THREE.PCFSoftShadowMap;
     this.activeScene = null;
     this.isRenderLoopActive = false;
 
@@ -26,9 +28,7 @@ export default class Renderer extends THREE.WebGLRenderer {
   renderLoop() {
     if (!this.isRenderLoopActive) return;
     requestAnimationFrame(this.renderLoop.bind(this));
-    // if (mixer) {
-    //   mixer.update(1 / 60);
-    // }
+    this.activeScene.tick();
     this.render(this.activeScene, this.activeScene.getCamera());
   }
   startRenderLoop() {

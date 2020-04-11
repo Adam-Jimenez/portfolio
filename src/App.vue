@@ -1,17 +1,14 @@
 <template>
   <div id="app">
-    <Nav/>
     <Canvas3D/>
   </div>
 </template>
 
 <script>
-import Nav from './components/Navigation/Nav'
 import Canvas3D from './components/Canvas3D/Canvas3D';
 export default {
   name: 'App',
   components: {
-    Nav,
     Canvas3D
   }
 }
