@@ -27,32 +27,109 @@ export default class DemoScene extends BaseScene {
 
     const textureLoader = new THREE.TextureLoader();
 
-    const cube = new THREE.Mesh(
-      new THREE.BoxGeometry(2, 1, 2),
-      new THREE.MeshBasicMaterial({
-        map: textureLoader.load("textures/youtube.png")
-      })
-    );
-    cube.position.set(4, 1, -2);
-    cube.castShadow = true;
-    cube.onHover = () => {};
-    cube.onClick = () => {
-      open("https://www.youtube.com/user/mradamjimenez");
-    };
+    // ["texture","url", x,y,z,w,h,d]
+    const socialCubes = [
+      [
+        "textures/youtube.png",
+        "https://www.youtube.com/user/mradamjimenez",
+        4,
+        1,
+        -6,
+        3,
+        2,
+        3
+      ],
+      [
+        "textures/linkedin.png",
+        "https://www.linkedin.com/in/adamjim/",
+        -5,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        "textures/binarysearch.png",
+        "https://binarysearch.io/@/poggers",
+        10,
+        1,
+        -8,
+        2,
+        2,
+        2
+      ],
+      [
+        "textures/leetcode.png",
+        "https://leetcode.com/adam-jimenez/",
+        -10,
+        1,
+        -8,
+        2,
+        2,
+        2
+      ],
+      [
+        "textures/twitch.png",
+        "https://www.twitch.tv/adamjimenez0",
+        5,
+        1,
+        3,
+        2,
+        2,
+        2
+      ],
+      [
+        "textures/github.png",
+        "https://github.com/Adam-Jimenez",
+        -4,
+        1,
+        -4,
+        2,
+        2,
+        2
+      ],
+      [
+        "textures/discord.png",
+        "https://discord.com/invite/BM4qTef",
+        -4,
+        3,
+        -4,
+        2,
+        2,
+        2
+      ]
+    ];
+    socialCubes.forEach(cube => {
+      const [texture, link, x, y, z, w, h, d] = cube;
+      const socialCube = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, d),
+        new THREE.MeshBasicMaterial({
+          map: textureLoader.load(texture),
+          transparent: true
+        })
+      );
+      socialCube.position.set(x, y, z);
+      socialCube.castShadow = true;
+      socialCube.onHover = () => {};
+      socialCube.onClick = () => {
+        open(link);
+      };
+      this.add(socialCube);
+    });
 
     this.add(light);
     this.add(ambientLight);
     this.add(plane);
-    this.add(cube);
 
     this.camera.position.set(0, 5, 10);
     this.camera.lookAt(0, 0, 0);
 
     this.previousHovered = [];
     document.addEventListener("click", () => {
-      this.previousHovered.forEach(obj => {
-        obj.object.onClick();
-      });
+      if (this.previousHovered.length > 0) {
+        this.previousHovered[0].object.onClick();
+      }
     });
   }
   load() {
