@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading :style="{ opacity: loading ? 1 : 0 }"/>
+    <Loading :style="{ opacity: sceneLoading ? 1 : 0 }"/>
     <canvas ref="canvas" />
   </div>
 </template>
@@ -13,7 +13,6 @@ export default {
   name: 'Canvas3D',
   data: () => ({
     renderer: null,
-    loading: true
   }),
   computed: {
     ...mapState([
@@ -24,15 +23,8 @@ export default {
   mounted() {
     const canvas = this.$refs.canvas;
     this.renderer = new Renderer(canvas);
-    this.renderer.setScene(this.activeScene);
-    this.activeScene.on('loaded', () => {
-      this.loading=false;
-      this.renderer.startRenderLoop();
-    })
-    if (!this.activeScene.isLoading()) {
-      this.loading=false;
-      this.renderer.startRenderLoop();
-    }
+    this.$store.commit('setRenderer', this.renderer);
+    this.$store.dispatch('loadScene', 'demo');
   },
   components: {
     Loading

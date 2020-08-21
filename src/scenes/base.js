@@ -4,8 +4,9 @@ import BaseObject from "@/objects/base";
 import EventEmitter from "events";
 
 export default class BaseScene extends THREE.Scene {
-  constructor() {
+  constructor(renderer) {
     super();
+    this.renderer = renderer;
     this.camera = this.initCamera();
     this.eventEmitter = new EventEmitter();
     this.loading = false;
@@ -60,6 +61,9 @@ export default class BaseScene extends THREE.Scene {
       this.eventEmitter.emit("loaded");
       return objects;
     });
+  }
+  load() {
+    return this.loadObjects();
   }
   tick() {
     if (this.loadedObjects) {
